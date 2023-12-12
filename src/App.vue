@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import BigInput from './components/BigInput.vue';
-import HelloWorld from './components/HelloWorld.vue'
+import {RouterLink, RouterView} from "vue-router";
+import BigInput from "./components/BigInput.vue";
+import BigForm from "./components/BigForm.vue";
 </script>
 
 <template>
   <header>
     <div class="wrapper">
-      <BigInput/>
+      <BigInput />
+      <BigForm />
     </div>
   </header>
 </template>
@@ -22,6 +23,5 @@ header {
   header {
     display: flex;
   }
-
 }
 </style>
