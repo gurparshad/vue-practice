@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { BIcon, BIconArrowUp, BIconArrowDown, BIconChevronDown, BIconChevronRight } from 'bootstrap-vue'
-const selectedNumber = ref(null); // Stores the selected number from the input
+const selectedNumber = ref(''); // Stores the selected number from the input
 const dropdownOpen = ref(false); // Controls the visibility of the dropdown
 const options = ref([
   { id: 1, label: 'Option 1' },
@@ -21,15 +21,43 @@ const selectOption = (option: any) => {
   dropdownOpen.value = false;
 };
 
+const euroSign = ref<HTMLElement | null>(null);
+const inputRef = ref(null);
+
+const updateWidthAndEuroSignPosition = () => {
+  if (inputRef.value && euroSign.value) {
+    // @ts-ignore
+    const textWidth = inputRef.value?.value?.length * 8; // Adjust the multiplier according to your font-size
+    console.log("textWidth-->>", textWidth)
+    if(textWidth === 0){
+          // @ts-ignore
+      inputRef.value.style.width = "63px";
+    }else {
+    // @ts-ignore
+    inputRef.value.style.width = `${textWidth}px`;
+    // euroSign.value.style.position = "absolute"
+    euroSign.value.style.left = `${textWidth + 6}px`; // Adjust the positioning as needed
+    }   
+ }
+};
+
+const showEuroSign = computed(() => {
+  return selectedNumber.value !== '';
+});
+
 </script>
 
 <template>
   <div class="parent">
     <p class="title">Amount</p>
 
-<div class="input-dropdown">
+  <div class="input-dropdown">
       <div class="input-wrapper">
-        <input type="number" v-model="selectedNumber" class="form-control custom-input amount-input" placeholder="|€">
+        <span>
+          <input style="width: 63px;" type="number" v-model="selectedNumber" class="form-control custom-input amount-input" placeholder="|€" @input="updateWidthAndEuroSignPosition"  ref="inputRef">
+          <p v-show="showEuroSign" class="euro-sign" ref="euroSign">€</p>
+        </span>
+        <!-- <span class="euro-sign">€</span> -->
         <span @click="toggleDropdown">
           <BIconChevronDown class="down-icon"/>
         </span>
@@ -154,6 +182,7 @@ p{
 .input-wrapper{
 display: flex;
 align-items: center;
+position: relative;
 }
 
 .arrow-icon{
@@ -180,6 +209,7 @@ input[type="number"] {
   padding: 5px 0; /* Adjust padding as needed */
   width: 100%; /* Ensure the input fills the width */
   border-radius: 0px;
+  min-width: 63px
 }
 
 .custom-input:focus {
@@ -198,6 +228,13 @@ input[type="number"] {
 .down-icon{
   color: white;
   margin-left: 13px;
+}
+
+.euro-sign {
+  color: #FDFDFD;
+  font-size: 14px; /* Initial size */
+  position: absolute;
+  top: 0px;
 }
 
 </style>
