@@ -26,11 +26,12 @@ const selectOption = (option: any) => {
 <template>
   <div class="parent">
     <p class="title">Amount</p>
+
 <div class="input-dropdown">
       <div class="input-wrapper">
-        <input type="number" v-model="selectedNumber" class="form-control" placeholder="Enter number">
-        <span class="arrow-icon" @click="toggleDropdown">
-          <BIconChevronDown />
+        <input type="number" v-model="selectedNumber" class="form-control custom-input amount-input" placeholder="|€">
+        <span @click="toggleDropdown">
+          <BIconChevronDown class="down-icon"/>
         </span>
       </div>
     </div>
@@ -50,9 +51,9 @@ const selectOption = (option: any) => {
 
   <div class="duration-input-dropdown">
       <div class="input-wrapper">
-        <input type="number" v-model="selectedNumber" class="form-control" placeholder="Enter number">
-        <span class="arrow-icon" @click="toggleDropdown">
-          <BIconChevronDown />
+        <input type="number" v-model="selectedNumber" class="form-control custom-input duration-input" placeholder="0 months">
+        <span @click="toggleDropdown">
+          <BIconChevronDown class="down-icon"/>
         </span>
       </div>
     </div>
@@ -122,6 +123,14 @@ p{
   align-items: center;
   justify-content: center;
 }
+
+.amount-input{
+  max-width: 63px;
+}
+
+.duration-input{
+  max-width: 91px;
+}
 .dropdownBro {
   position: absolute;
   top: 50px;
@@ -141,16 +150,54 @@ p{
   margin-bottom: 13px;
   font-size: 16px;
 }
-.input-dropdown{
-  width: 200px;
-}
 
 .input-wrapper{
 display: flex;
+align-items: center;
 }
 
 .arrow-icon{
   background-color: red;
+}
+
+
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield; /* Firefox */
+}
+
+.custom-input {
+  color: #FDFDFD;
+  border: none;
+  border-bottom: 1px solid rgba(222, 222, 222, 0.5); /* Bottom border */
+  background-color: transparent; /* Transparent background */
+  padding: 5px 0; /* Adjust padding as needed */
+  width: 100%; /* Ensure the input fills the width */
+  border-radius: 0px;
+}
+
+.custom-input:focus {
+  color: #FDFDFD;
+  background-color: transparent;
+  box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.1); 
+  border: none;
+  border-bottom: 1px solid #ccc;
+}
+
+.custom-input::placeholder {
+  color: #FDFDFD; 
+  text-align: center;
+}
+
+.down-icon{
+  color: white;
+  margin-left: 13px;
 }
 
 </style>
