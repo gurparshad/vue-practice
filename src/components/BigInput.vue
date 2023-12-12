@@ -11,19 +11,14 @@ const options = ref([
   { id: 2, label: 'Option 2' },
   { id: 3, label: 'Option 3' },
   { id: 1, label: 'Option 1' },
-  { id: 2, label: 'Option 2' },
-  { id: 3, label: 'Option 3' }
 ]);
 
 const toggleDropdown = () => {
-  console.log("in toggle", dropdownOpen.value)
   dropdownOpen.value = !dropdownOpen.value;
 };
 
 const selectOption = (option: any) => {
-  // Handle selected option here
-  console.log('Selected Option:', option);
-  dropdownOpen.value = false; // Close the dropdown after selection
+  dropdownOpen.value = false;
 };
 
 </script>
@@ -31,15 +26,47 @@ const selectOption = (option: any) => {
 <template>
   <div class="parent">
     <p class="title">Amount</p>
-    <b-dropdown no-caret id="dropdown-buttons" text="Dropdown" arrow-down-icon="BIconArrowDown">
-      <template #button-content>
-        Custom
-        <BIconChevronRight/>
-    </template>
-    <b-dropdown-item-button>I'm a button</b-dropdown-item-button>
-</b-dropdown>
+<div class="input-dropdown">
+      <div class="input-wrapper">
+        <input type="number" v-model="selectedNumber" class="form-control" placeholder="Enter number">
+        <span class="arrow-icon" @click="toggleDropdown">
+          <BIconChevronDown />
+        </span>
+      </div>
+    </div>
+
+    <div class="dropdownBro" v-show="dropdownOpen">
+        <div
+          v-for="option in options"
+          :key="option.id"
+          class="dropdown-item"
+          @click="selectOption(option)"
+        >
+          {{ option.label }}
+        </div>
+      </div>
 
   <p class="title">Duration</p>
+
+  <div class="duration-input-dropdown">
+      <div class="input-wrapper">
+        <input type="number" v-model="selectedNumber" class="form-control" placeholder="Enter number">
+        <span class="arrow-icon" @click="toggleDropdown">
+          <BIconChevronDown />
+        </span>
+      </div>
+    </div>
+
+    <div class="dropdownBro" v-show="dropdownOpen">
+        <div
+          v-for="option in options"
+          :key="option.id"
+          class="dropdown-item"
+          @click="selectOption(option)"
+        >
+          {{ option.label }}
+        </div>
+      </div>
 
   <div class="monthly-payment">
     <p>Monthly Payment</p>
@@ -94,6 +121,36 @@ p{
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.dropdownBro {
+  position: absolute;
+  top: 50px;
+  left: 300px;
+  background: #FFFFFF;
+  margin-top: 50px;
+  color: orange;
+  width: 168px;
+  height: 168px;
+  border-radius: 4px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Syntax: offset-x | offset-y | blur-radius | spread-radius | color */
+  text-align: center;
+  padding: 19px;
+  overflow-y: auto; 
+}
+.dropdown-item{
+  margin-bottom: 13px;
+  font-size: 16px;
+}
+.input-dropdown{
+  width: 200px;
+}
+
+.input-wrapper{
+display: flex;
+}
+
+.arrow-icon{
+  background-color: red;
 }
 
 </style>
